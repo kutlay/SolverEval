@@ -1,0 +1,15 @@
+[project]
+name = "solver_eval"
+version = "0.0.1"
+authors = [
+  { name="Atalay Kutlay", email="atalaykutlaytr@gmail.com" },
+]
+description = "SolverEval is a project to continuously test mathematical solvers."
+readme = "README.md"
+requires-python = ">=3.8"
+
+[tool.setuptools]
+py-modules = ['solver_eval']
+
+[project.urls]
+Homepage = "https://github.com/kutlay/SolverEval"
