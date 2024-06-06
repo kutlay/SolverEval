@@ -1,10 +1,10 @@
 import os
 from enum import Enum
-
 import pyomo.environ as pe
 from pyomo.contrib.appsi.solvers.highs import Highs
 from pyomo.contrib.appsi.base import (PersistentSolver,PersistentBase)
 from .exceptions import SolverExcluded, SolverNotImplemented
+
 class Solver(Enum):
     """
     This enum intends to keep all possible values for a solver. No solver here

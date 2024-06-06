@@ -2,6 +2,7 @@ from dataclasses import dataclass
 import glob
 import importlib
 from inspect import isfunction
+from pathlib import Path
 
 import os
 from pathlib import Path
@@ -75,7 +76,7 @@ def get_stats(execution_times: list[float]) -> ExecutionStatistics:
 
 def run_tests():
     """Discover and run all test functions."""
-    test_folder = "repo"
+    test_folder = os.path.join(Path(__file__).parent.parent, "repo")
     modules = load_modules_from_folder(test_folder)
     all_tests = []
 
