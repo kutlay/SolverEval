@@ -1,4 +1,4 @@
-highspy==1.7.1.dev1
 numpy==1.26.4
 ply==3.11
 Pyomo==6.7.3
+pytest
