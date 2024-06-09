@@ -1,7 +1,9 @@
 import pyomo.environ as pe
+from pyomo.environ import value
+from pyomo.opt.results import SolverResults
 from solver_eval.solvers import Solver, AbstractSolver
 
-def test_to_succeed():
+def test_to_succeed() -> SolverResults:
 
     m = pe.ConcreteModel()
     m.x = pe.Var(domain = pe.Binary)
@@ -19,9 +21,12 @@ def test_to_succeed():
 
     opt = AbstractSolver()
     res = opt.solve(m)
-    assert res.best_feasible_objective == 0.5
 
-def test_to_fail():
+    assert value(m.obj) == 0.5
+
+    return res
+
+def test_to_fail() -> SolverResults:
 
     m = pe.ConcreteModel()
     m.x = pe.Var(domain = pe.Binary)
@@ -39,4 +44,7 @@ def test_to_fail():
 
     opt = AbstractSolver()
     res = opt.solve(m)
-    assert res.best_feasible_objective == 0.4
+
+    assert value(m.obj) == 0.4
+    
+    return res
