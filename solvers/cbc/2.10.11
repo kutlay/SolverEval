@@ -1,0 +1,38 @@
+# Use an official Python runtime as a parent image
+FROM python:3.11-slim
+
+USER root
+
+# Install required packages for building Highs
+RUN apt-get update && \
+    apt-get install -y \
+    build-essential \
+    cmake \
+    wget \
+    libz-dev \
+    libbz2-dev \
+    liblzma-dev && \
+    apt-get clean
+
+COPY /requirements.txt requirements.txt
+# Install Pyomo and pytest
+RUN pip3 install -r requirements.txt
+
+# Copy the application files
+COPY / /app
+WORKDIR /app
+
+RUN pip3 install -e .
+
+WORKDIR /app/solver_eval
+
+# Install CBC 2.10.11
+RUN wget "https://github.com/coin-or/Cbc/releases/download/releases/2.10.11/Cbc-releases.2.10.11-x86_64-ubuntu20-gcc940-static.tar.gz" && \
+    tar -xzvf "Cbc-releases.2.10.11-x86_64-ubuntu20-gcc940-static.tar.gz" && \
+    mv bin/cbc /usr/bin/cbc && \
+    ldconfig
+
+ENV SOLVEREVAL_SOLVER "cbc"
+ENV SOLVEREVAL_SOLVER_VERSION "2.10.11"
+
+CMD ["python3", "test_all.py"]
