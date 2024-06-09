@@ -13,6 +13,7 @@ class Solver(Enum):
     AbstractSolver instead.
     """
     highs = "highs"
+    cbc = "cbc"
     cplex = "cplex"
 
 class AbstractSolver(PersistentBase, PersistentSolver):
@@ -32,8 +33,12 @@ class AbstractSolver(PersistentBase, PersistentSolver):
 
         match solver_to_select:
             case Solver.highs:
-                return Highs()
+                solver = pe.SolverFactory('highs')
+            case Solver.cbc:
+                solver = pe.SolverFactory('cbc')
             case None:
                 raise Exception("No solver selected")
             case _:
                 raise SolverNotImplemented(f"{solver_to_select} is not implemented in SolverEval")
+        
+        return solver
