@@ -49,7 +49,7 @@ def time_function(func, sample: int = 10) -> list[float]:
 
     for i in range(sample):
         start = timer()
-        func()
+        result = func()
         end = timer()
         execution_times.append(end-start)
 
