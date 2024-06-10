@@ -1,7 +1,6 @@
 import os
 from enum import Enum
-import pyomo.environ as pe
-from pyomo.contrib.appsi.solvers.highs import Highs
+from pyomo.contrib.appsi.base import SolverFactory
 from pyomo.contrib.appsi.base import (PersistentSolver,PersistentBase)
 from .exceptions import SolverExcluded, SolverNotImplemented
 
@@ -33,9 +32,9 @@ class AbstractSolver(PersistentBase, PersistentSolver):
 
         match solver_to_select:
             case Solver.highs:
-                solver = pe.SolverFactory('highs')
+                solver = SolverFactory('highs')
             case Solver.cbc:
-                solver = pe.SolverFactory('cbc')
+                solver = SolverFactory('cbc')
             case None:
                 raise Exception("No solver selected")
             case _:
