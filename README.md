@@ -16,5 +16,5 @@ Since SolverEval's purpose is to test the solvers and not the interface communic
 
 The current list of available solvers on SolverEval:
 
-- HiGHS (Currently broken due to SolverFactory in pyomo)
+- HiGHS
 - CBC
