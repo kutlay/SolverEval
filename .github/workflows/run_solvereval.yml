@@ -1,4 +1,4 @@
-name: Run SolverEval
+name: Run SolverEval for ${{inputs.solver}}
 
 on:
   workflow_dispatch:
@@ -18,8 +18,7 @@ jobs:
         file: solvers/${{ inputs.solver }}
         tags: ${{inputs.solver}}
         push: false
-
-  runtests:
+        
     - uses: addnab/docker-run-action@v3
       with:
         image: ${{inputs.solver}}
