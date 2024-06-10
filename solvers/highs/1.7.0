@@ -1,30 +1,19 @@
 # Use an official Python runtime as a parent image
-FROM python:3.12-slim
+FROM python:3.11-slim
 
 # Install required packages for building Highs
 RUN apt-get update && \
     apt-get install -y \
     build-essential \
     cmake \
-    git \
     wget \
     libz-dev \
     libbz2-dev \
     liblzma-dev && \
+    git && \
     apt-get clean
 
-# Install Highs 1.7.0
-RUN wget https://github.com/ERGO-Code/HiGHS/archive/refs/tags/v1.7.0.tar.gz && \
-    tar -xzvf v1.7.0.tar.gz && \
-    cd HiGHS-1.7.0 && \
-    mkdir build && \
-    cd build && \
-    cmake .. && \
-    make && \
-    make install && \
-    cd ../.. && \
-    rm -rf HiGHS-1.7.0 v1.7.0.tar.gz && \
-    ldconfig
+RUN apt-get install -y git
 
 COPY /requirements.txt requirements.txt
 # Install Pyomo and pytest
@@ -37,6 +26,11 @@ WORKDIR /app
 RUN pip3 install -e .
 
 WORKDIR /app/solver_eval
+
+# Install Highs 1.7.0
+RUN git clone --depth 1 --branch v1.7.0 "https://github.com/ERGO-Code/HiGHS.git" highs && \
+    cd highs && \
+    pip install .
 
 ENV SOLVEREVAL_SOLVER "highs"
 ENV SOLVEREVAL_SOLVER_VERSION "1.7.0"

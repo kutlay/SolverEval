@@ -10,20 +10,10 @@ RUN apt-get update && \
     libz-dev \
     libbz2-dev \
     liblzma-dev && \
+    git && \
     apt-get clean
 
-# Install Highs 1.6.0
-RUN wget https://github.com/ERGO-Code/HiGHS/archive/refs/tags/v1.6.0.tar.gz && \
-    tar -xzvf v1.6.0.tar.gz && \
-    cd HiGHS-1.6.0 && \
-    mkdir build && \
-    cd build && \
-    cmake .. && \
-    make && \
-    make install && \
-    cd ../.. && \
-    rm -rf HiGHS-1.6.0 v1.6.0.tar.gz && \
-    ldconfig
+RUN apt-get install -y git
 
 COPY /requirements.txt requirements.txt
 # Install Pyomo and pytest
@@ -36,6 +26,11 @@ WORKDIR /app
 RUN pip3 install -e .
 
 WORKDIR /app/solver_eval
+
+# Install Highs 1.6.0
+RUN git clone --depth 1 --branch v1.6.0 "https://github.com/ERGO-Code/HiGHS.git" highs && \
+    cd highs && \
+    pip install .
 
 ENV SOLVEREVAL_SOLVER "highs"
 ENV SOLVEREVAL_SOLVER_VERSION "1.6.0"
