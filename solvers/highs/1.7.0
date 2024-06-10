@@ -9,7 +9,7 @@ RUN apt-get update && \
     wget \
     libz-dev \
     libbz2-dev \
-    liblzma-dev && \
+    liblzma-dev \
     git && \
     apt-get clean
 

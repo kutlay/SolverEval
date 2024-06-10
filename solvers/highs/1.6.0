@@ -9,11 +9,9 @@ RUN apt-get update && \
     wget \
     libz-dev \
     libbz2-dev \
-    liblzma-dev && \
+    liblzma-dev \
     git && \
     apt-get clean
-
-RUN apt-get install -y git
 
 COPY /requirements.txt requirements.txt
 # Install Pyomo and pytest
