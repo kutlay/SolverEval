@@ -1,4 +1,4 @@
-name: Run SolverEval for ${{inputs.solver}}
+name: Run SolverEval
 
 on:
   workflow_dispatch:
